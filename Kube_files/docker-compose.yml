@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+
+  trivy:
+    image: aquasec/trivy:0.29.2
+    entrypoint: trivy server --skip-update --listen "0.0.0.0:4030"
+    volumes:
+      - ./trivy-data/trivy/db:/root/.cache/trivy/db
+    networks:
+      - no-internet
+      - internet
+
+networks:
+  no-internet:
+    driver: bridge
+    internal: true
+  internet:
+    driver: bridge
+
